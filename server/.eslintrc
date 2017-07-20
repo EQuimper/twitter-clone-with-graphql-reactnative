@@ -1,0 +1,6 @@
+{
+  "extends": [
+    "equimper",
+    "prettier"
+  ]
+}
