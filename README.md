@@ -293,3 +293,227 @@ mocks().then(() => {
 
 ![](https://image.ibb.co/huhn5Q/Screen_Shot_2017_07_19_at_7_10_45_PM.png)
 
+Good Job!
+
+---
+
+## Part 2 - Tweet Basic Crud
+
+### Video
+
+- [Video here](https://youtu.be/tYiGpJGJatE)
+
+This part gonna be about create the resolver for create and get a single Tweet
+
+1. Go inside `src/graphql/schema.js` and add this to the query object.
+
+```js
+getTweet(_id: ID!): Tweet
+```
+
+As you can see here we create a resolver call getTweet where we pass in the _id **Required** for fetching the tweet. Pretty simple here. The `!` mean this is required. The ID is a type build in Graphql. This is for a unique identifier, is the key for cache.
+
+2. After we can go inside `src/graphql/resolvers/tweet-resolvers.js` and add this one.
+
+```js
+getTweet: (_, { _id }) => Tweet.findById(_id),
+```
+
+Here we just find one single item by providing the id. Mongoose have an awesome method call `findById()` who make ur life easier ;). Inside the resolver we have a function who take 3 arguments. First one is the parent "We gonna talk about it later", second one is the args object who is what inside the argument inside the `schema.js` file. The third one is the context and we gonna also talk about it later. Here you see I `{ _id }` destructuring the `_id` prop from the args. This is just for make my code a bit cleaner.
+
+3. Now we just need to go inside `src/graphql/resolvers/index.js` and add what we just did in the Query object
+
+```js
+getTweet: TweetResolvers.getTweet,
+```
+
+Try it inside Graphiql, take a _id of one of the object by redoing the `getTweets` query and do this one
+
+![](https://image.ibb.co/cuhHqQ/Screen_Shot_2017_07_20_at_5_26_05_PM.png)
+
+4. Now time to do the creation one. For now I'm gonna break the code in 3 example and you can just put them in the file associate at the top of it.
+
+##### src/grahpql/schema.js`
+
+```js
+type Mutation {
+  createTweet(text: String!): Tweet
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}
+```
+
+Here simple creation who required a text to make it work. We also add this resolver inside a new type call Mutation. Mutation is all about everything else than GET, like PUT, DELETE, POST. Also we need to add this Mutation inside the schema object.
+
+##### src/graphql/resolvers/tweet-resolvers.js
+
+```js
+createTweet: (_, args) => Tweet.create(args),
+```
+
+Here we pass the full args object "Grahpql filter for us". For the validation that's gonna be later.
+
+##### src/grahpql/resolvers/index.js
+
+```js
+Mutation: {
+  createTweet: TweetResolvers.createTweet,
+}
+```
+
+We pass the resolver create inside the new object Mutation.
+
+Try it inside you graphiql ide.
+
+![](https://image.ibb.co/jzUac5/Screen_Shot_2017_07_20_at_5_24_55_PM.png)
+
+5. Perfect so now we can create a tweet. Time to update it ;)
+
+##### src/grahpql/schema.js
+
+```js
+updateTweet(_id: ID!, text: String): Tweet
+```
+
+Add this one inside the Mutation type.
+
+##### src/graphql/resolvers/tweet-resolvers.js
+
+```js
+updateTweet: (_, { _id, ...rest }) => Tweet.findByIdAndUpdate(_id, rest, { new: true }),
+```
+
+O boy, what we just did here ? If you don't understand the `...rest` I have made a video where I explain this thing ;) [Link Here](https://youtu.be/UA6fvCcSluA).
+
+We find the tweet by using the id and we make use of the `findByIdAndUpdate()` method of mongoose. First argument is the id of the object. The second is the object we change. The `{ new: true }` mean we want to send back the new object.
+
+##### src/grahpql/resolvers/index.js
+
+```js
+updateTweet: TweetResolvers.updateTweet,
+```
+
+6. Now time to delete our awesome tweet ;)
+
+##### src/grahpql/schema.js
+
+```js
+deleteTweet(_id: ID!): Status
+```
+
+Where this Status type came ? Time to create it :)
+
+```js
+type Status {
+  message: String!
+}
+```
+
+This is my way for show in the front-end the message of something happening. Because remember when you delete something this is not existing anymore.
+
+##### src/graphql/resolvers/tweet-resolvers.js
+
+```js
+deleteTweet: async (_, { _id }) => {
+  try {
+    await Tweet.findByIdAndRemove(_id);
+    return {
+      message: 'Delete Success!'
+    }
+  } catch (error) {
+    throw error;
+  }
+}
+```
+
+Here this is the bigger resolver we create for this part. First this function gonna be an `async` one who mean this is gonna be asynchronous. First we delete the tweet and after we send the message success.
+
+##### src/grahpql/resolvers/index.js
+
+```js
+deleteTweet: TweetResolvers.deleteTweet
+```
+
+Put this inside Mutation.
+
+Time to test it.
+
+![](https://image.ibb.co/btPGH5/Screen_Shot_2017_07_20_at_6_17_25_PM.png)
+
+7. But now the problem is the tweet came descendant. We don't have a way to managed it. Like twitter the last tweet is at the top not the inverse. We can change that easy. Go inside the tweets models
+
+##### src/models/Tweet.js
+
+```js
+const TweetSchema = new Schema({
+  text: String,
+}, { timestamps: true });
+```
+
+Here I add the timestamps who give us 2 new field to our model. `createdAt` and `updatedAt` who are date. Cause of it we gonna add in the schema this 2 field. Also we gonna create a `scalar Date` who is the way to do a custom type in graphql.
+
+##### src/graphql/schema.js
+
+```js
+scalar Date
+
+type Tweet {
+  _id: ID!
+  text: String!
+  createdAt: Date!
+  updatedAt: Date!
+}
+```
+
+Now go inside the main resolver file after install `yarn add graphql-date`
+
+##### src/grahpql/resolvers/index.js
+
+```js
+import GraphQLDate from 'graphql-date';
+
+import TweetResolvers from './tweet-resolvers';
+
+export default {
+  Date: GraphQLDate,
+  Query: {
+    getTweet: TweetResolvers.getTweet,
+    getTweets: TweetResolvers.getTweets,
+  },
+  Mutation: {
+    createTweet: TweetResolvers.createTweet,
+    updateTweet: TweetResolvers.updateTweet,
+    deleteTweet: TweetResolvers.deleteTweet
+  }
+};
+```
+
+Graphql gonna always use this Date here when he see the type. Why we do this ? This is for serialized the input.
+
+Now time to add the sort on mongoose for get the lastone create first
+
+##### src/grahpql/resolvers/tweet-resolvers.js
+
+```js
+import Tweet from '../../models/Tweet';
+
+export default {
+  createTweet: (_, args) => Tweet.create(args),
+  getTweet: (_, { _id }) => Tweet.findById(_id),
+  getTweets: () => Tweet.find({}).sort({ createdAt: -1 }),
+  updateTweet: (_, { _id, ...rest }) => Tweet.findByIdAndUpdate(_id, rest, { new: true }),
+  deleteTweet: async (_, { _id }) => {
+    try {
+      await Tweet.findByIdAndRemove(_id);
+      return {
+        message: 'Delete Success!'
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+};
+```
