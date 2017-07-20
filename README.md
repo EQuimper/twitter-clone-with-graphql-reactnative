@@ -13,6 +13,11 @@ This is a simple Youtube tutorial where we go over some of new tech. The end pro
 
 ## Part 1
 
+### Video
+
+- [The Setup](https://youtu.be/33qP1QMmjv8)
+- [Part 1](https://youtu.be/qLBwByURMf8)
+
 This part is mainly for the basic setup of the server. We go over the installation of express and the basic graphql setup. We add also Mongodb and we make mocks on it.
 
 1. Create a folder where we gonna put the server and mobile folder in
