@@ -4,6 +4,8 @@
 
 This is a simple Youtube tutorial where we go over some of new tech. The end product is to build a Twitter kind of clone where we have real time update.
 
+[End Product Intro Video](https://youtu.be/U9OfNJ9Ia70)
+
 ### Pre-Requis
 
 - Installation of Mongodb, ReactNative and Nodejs
