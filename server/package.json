@@ -2,5 +2,25 @@
   "name": "server",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=dev nodemon --exec babel-node src/index.js",
+    "prettier": "prettier --single-quote --print-width 80 --trailing-comma all --write 'src/**/*.js'"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "cross-env": "^5.0.1",
+    "express": "^4.15.3",
+    "mongoose": "^4.11.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-preset-env": "^1.6.0",
+    "eslint": "^4.2.0",
+    "eslint-config-equimper": "^2.2.1",
+    "eslint-config-prettier": "^2.3.0",
+    "nodemon": "^1.11.0",
+    "prettier": "^1.5.3"
+  }
 }
