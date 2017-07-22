@@ -2,16 +2,16 @@
 
 ### What is this ?
 
-This is a simple Youtube tutorial where we go over some of new tech. The end product is to build a Twitter kind of clone where we have real time update.
+This is a simple Youtube tutorial where we go over some new tech. The end product is to build a Twitter kind of clone where we have real time updates.
 
 [End Product Intro Video](https://youtu.be/U9OfNJ9Ia70)
 
-### Pre-Requis
+### Prerequisite
 
 - Installation of Mongodb, ReactNative and Nodejs
 - Understanding of Mongodb, Nodejs, ReactNative and a bit of Graphql
 - Know what is websocket
-- Be patient we me ;)
+- Be patient with me ;)
 
 ## Part 1
 
@@ -20,13 +20,13 @@ This is a simple Youtube tutorial where we go over some of new tech. The end pro
 - [The Setup](https://youtu.be/33qP1QMmjv8)
 - [Part 1](https://youtu.be/qLBwByURMf8)
 
-This part is mainly for the basic setup of the server. We go over the installation of express and the basic graphql setup. We add also Mongodb and we make mocks on it.
+This part is mainly for the basic setup of the server. We go over the installation of express and the basic graphql setup. We also add Mongodb and we make mocks on it.
 
-1. Create a folder where we gonna put the server and mobile folder in
-2. Cd in the server folder and run the command `yarn init` + click enter on each question
+1. Create a folder where we will put the server and mobile folder in
+2. Cd into the server folder and run the command `yarn init` + click enter on each question
 3. Run `yarn add express cross-env body-parser`
-4. Create a folder call `src` and create a file in call `index.js`
-5. Put a the top of the file the basic setup of express.
+4. Create a folder called `src` and create a file inside called `index.js`
+5. Put the basic setup of express at the top of the file .
 
 ```js
 import express from 'express';
@@ -46,17 +46,17 @@ app.listen(PORT, err => {
   }
 });
 ```
-5. Now we need to install babel in the devDependencies cause we want to write in latest javascript feature.
+5. Now we need to install babel in the devDependencies because we want to write in latest javascript feature.
 
 `yarn add -D babel-cli babel-plugin-transform-object-rest-spread babel-preset-env`
 
-6. Go in your `package.json` and add this scripts file:
+6. Go into your `package.json` and add this scripts file:
 
 ```json
 "dev": "cross-env NODE_ENV=dev nodemon --exec babel-node src/index.js"
 ```
 
-7. Create a `.babelrc` with this thing in.
+7. Create a `.babelrc` with these settings : 
 
 ```
 {
@@ -81,9 +81,9 @@ app.listen(PORT, err => {
 }
 ```
 
-Here I make use of `babel-preset-env` who help us to setup babel without a pain.
+Here I make use of `babel-preset-env`. This helps us to setup babel without pain.
 
-8. Now time to setup some graphql stuff. First create a folder `graphql` inside `src`. After create a `schema.js` file and put that in
+8. Now it is time to setup some graphql stuff. First create a folder called `graphql` inside `src`. After that create a `schema.js` file and put that in :
 
 ```js
 export default`
@@ -104,7 +104,7 @@ export default`
 
 Here we have a basic schema for the tweet. Also we have a query call `getTweets` you render a list of this tweet.
 
-9. Now time to write the resolver for this `getTweets`. Create a folder `resolvers` inside `src/graphql/`. After a file call `tweet-resolver.js`. Inside this one put this.
+9. Now time to write the resolver for this `getTweets`. Create a folder `resolvers` inside `src/graphql/`. After that, create a file called `tweet-resolver.js`. Inside this one put this:
 
 ```js
 import Tweet from '../../models/Tweet';
@@ -114,7 +114,7 @@ export default {
 }
 ```
 
-And create a `index.js` file inside `src/graphql/resolvers/` folder and put
+And create a `index.js` file inside `src/graphql/resolvers/` folder and put :
 
 ```js
 import TweetResolvers from './tweet-resolver';
@@ -126,9 +126,9 @@ export default {
 }
 ```
 
-But where this `Tweet` models came ? Yes this is time to setup the db.
+But where did this `Tweet` models come from ? Yes, this is time to setup the db.
 
-10. Create a `db.js` inside the `src/config/` folder. Put this thing after have running this command.
+10. Create a `db.js` inside the `src/config/` folder. Put this lines in after running this command.
 
 `yarn add mongoose`
 
@@ -160,7 +160,7 @@ mongoose.connection
   });
 ```
 
-Nothing crazy here just the basic setup of a db with mongodb. But where do the constants file came ? Time to create it. So inside the `src/config/` folder create a file call `constants.js' and put this thing.
+Nothing crazy here just the basic setup of a db with mongodb. But where do the constants file came ? Time to create it. So inside the `src/config/` folder create a file called `constants.js'` and put these lines in.
 
 ```js
 export default {
@@ -170,7 +170,7 @@ export default {
 }
 ```
 
-Here this is the constants where we put the base configuration of the server.
+Here, these are the constants where we put the base configuration of the server.
 
   - PORT -> the port of the app
   - DB_URL -> url for the db
@@ -231,7 +231,7 @@ graphQLServer.listen(constants.PORT, err => {
 
 Nothing crazy here, basic setup + add graphiql the IDE of grahpql.
 
-13. Time to mocks some stuff ? Sure ;) That's gonna be easy, first think add `yarn add -D faker` who is a library for help you have mock data. Gonna be pretty easy here we gonna create 10 fake mock tweet.
+13. Time to mocks some stuff ? Sure ;) That's gonna be easy, first think add `yarn add -D faker` which is a library to help you with mock data. We will create 10 fake mock tweet.
 
 Inside `src` create a folder `mocks` and a file `index.js` inside this one.
 
@@ -276,7 +276,7 @@ mocks().then(() => {
 });
 ```
 
-15. Time to test it. Go on https://github.com/skevy/graphiql-app and download the app. Why ? Because we gonna need this of the jwt auth later ;)
+15. Time to test it. Go on https://github.com/skevy/graphiql-app and download the app. Why ? Because we will need this jwt auth later ;)
 
 16. Open this tool now and add this in the left part. This is a simple query where we get all 10 tweets. Don't forget to put the url `http://localhost:3000/graphql`
 
@@ -303,7 +303,7 @@ Good Job!
 
 - [Video here](https://youtu.be/tYiGpJGJatE)
 
-This part gonna be about create the resolver for create and get a single Tweet
+This part is going to be about creating the resolver for creating and get a single Tweet
 
 1. Go inside `src/graphql/schema.js` and add this to the query object.
 
@@ -311,7 +311,7 @@ This part gonna be about create the resolver for create and get a single Tweet
 getTweet(_id: ID!): Tweet
 ```
 
-As you can see here we create a resolver call getTweet where we pass in the _id **Required** for fetching the tweet. Pretty simple here. The `!` mean this is required. The ID is a type build in Graphql. This is for a unique identifier, is the key for cache.
+As you can see here we create a resolver called getTweet where we pass in the _id **Required** for fetching the tweet. Pretty simple here. The `!` mean this is required. The ID is a type build in Graphql. This is for a unique identifier, which is the key for cache.
 
 2. After we can go inside `src/graphql/resolvers/tweet-resolvers.js` and add this one.
 
@@ -319,9 +319,9 @@ As you can see here we create a resolver call getTweet where we pass in the _id 
 getTweet: (_, { _id }) => Tweet.findById(_id),
 ```
 
-Here we just find one single item by providing the id. Mongoose have an awesome method call `findById()` who make ur life easier ;). Inside the resolver we have a function who take 3 arguments. First one is the parent "We gonna talk about it later", second one is the args object who is what inside the argument inside the `schema.js` file. The third one is the context and we gonna also talk about it later. Here you see I `{ _id }` destructuring the `_id` prop from the args. This is just for make my code a bit cleaner.
+Here we just find one single item by providing the id. Mongoose have an awesome method called `findById()` to make your life easier ;). Inside the resolver we have a function which takes 3 arguments. First one is the parent : "We gonna talk about it later", second one is the args object inside the argument inside the `schema.js` file. The third one is the context and we will also talk about it later. Here you see me destructuring the `{ _id }`,  `_id` prop from the args. This is just to make my code a bit cleaner.
 
-3. Now we just need to go inside `src/graphql/resolvers/index.js` and add what we just did in the Query object
+3. Now we need to go inside `src/graphql/resolvers/index.js` and add what we just did in the Query object
 
 ```js
 getTweet: TweetResolvers.getTweet,
@@ -331,7 +331,7 @@ Try it inside Graphiql, take a _id of one of the object by redoing the `getTweet
 
 ![](https://image.ibb.co/cuhHqQ/Screen_Shot_2017_07_20_at_5_26_05_PM.png)
 
-4. Now time to do the creation one. For now I'm gonna break the code in 3 example and you can just put them in the file associate at the top of it.
+4. Now time to do the mutataion one. For now I'm gonna break the code in 3 example and you can just put them in the file associate at the top of it.
 
 ##### src/grahpql/schema.js`
 
@@ -346,7 +346,7 @@ schema {
 }
 ```
 
-Here simple creation who required a text to make it work. We also add this resolver inside a new type call Mutation. Mutation is all about everything else than GET, like PUT, DELETE, POST. Also we need to add this Mutation inside the schema object.
+Here simple creation which requires a text to make it work. We also add this resolver inside a new type call Mutation. Mutation is all about everything else than GET, like PUT, DELETE, POST. Also we need to add this Mutation inside the schema object.
 
 ##### src/graphql/resolvers/tweet-resolvers.js
 
@@ -364,7 +364,7 @@ Mutation: {
 }
 ```
 
-We pass the resolver create inside the new object Mutation.
+We pass the resolver createTweet inside the new object Mutation.
 
 Try it inside you graphiql ide.
 
@@ -412,7 +412,7 @@ type Status {
 }
 ```
 
-This is my way for show in the front-end the message of something happening. Because remember when you delete something this is not existing anymore.
+This is my way for show in the front-end the message of something happening. Because remember when you delete something that does not exist anymore.
 
 ##### src/graphql/resolvers/tweet-resolvers.js
 
@@ -429,7 +429,7 @@ deleteTweet: async (_, { _id }) => {
 }
 ```
 
-Here this is the bigger resolver we create for this part. First this function gonna be an `async` one who mean this is gonna be asynchronous. First we delete the tweet and after we send the message success.
+Here this is the bigger resolver we create for this part. First this function gonna be an `async` one who mean this is gonna be asynchronous. First we delete the tweet and after we send the success message.
 
 ##### src/grahpql/resolvers/index.js
 
@@ -443,7 +443,7 @@ Time to test it.
 
 ![](https://image.ibb.co/btPGH5/Screen_Shot_2017_07_20_at_6_17_25_PM.png)
 
-7. But now the problem is the tweet came descendant. We don't have a way to managed it. Like twitter the last tweet is at the top not the inverse. We can change that easy. Go inside the tweets models
+7. But now the problem is the tweet came in descendant fashion. We still don't have a way to managed it like in twitter the last tweet is at the top of the feed not the other way around. We can change that, its easy. Go inside the tweets models
 
 ##### src/models/Tweet.js
 
@@ -453,7 +453,7 @@ const TweetSchema = new Schema({
 }, { timestamps: true });
 ```
 
-Here I add the timestamps who give us 2 new field to our model. `createdAt` and `updatedAt` who are date. Cause of it we gonna add in the schema this 2 field. Also we gonna create a `scalar Date` who is the way to do a custom type in graphql.
+Here I add the timestamps who give us 2 new field to our model. `createdAt` and `updatedAt` who are dates. Cause of it we gonna add in the schema this 2 field. Also we gonna create a `scalar Date` which is the way to do a custom type in graphql.
 
 ##### src/graphql/schema.js
 
@@ -491,7 +491,7 @@ export default {
 };
 ```
 
-Graphql gonna always use this Date here when he see the type. Why we do this ? This is for serialized the input.
+Graphql gonna always use this Date here when he see the type. Why we do this ? This is for serializing the input.
 
 Now time to add the sort on mongoose for get the lastone create first
 
