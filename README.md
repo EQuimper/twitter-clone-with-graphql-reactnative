@@ -1,8 +1,8 @@
 # Twitter Clone with Graphql and React-Native
 
 - [Part 1](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-1)
-- [Part 2](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-2)
-- [Part 3](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-3)
+- [Part 2](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-2---tweet-basic-crud)
+- [Part 3](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-3---creation-of-the-user-with-signup-and-login-resolvers)
 
 ### What is this?
 
