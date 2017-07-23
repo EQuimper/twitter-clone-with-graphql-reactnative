@@ -3,6 +3,7 @@
 - [Part 1](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-1)
 - [Part 2](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-2---tweet-basic-crud)
 - [Part 3](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-3---creation-of-the-user-with-signup-and-login-resolvers)
+- [Part 4](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-4---authentication-server-side-with-jwt)
 
 ### What is this?
 
@@ -1176,7 +1177,7 @@ export default`
   }
 
   type Auth {
-    token: String
+    token: String!
   }
 
   type User {
@@ -1211,7 +1212,7 @@ export default`
   type Query {
     getTweet(_id: ID!): Tweet
     getTweets: [Tweet]
-    me: User
+    me: Me
   }
 
   type Mutation {
