@@ -1,16 +1,16 @@
 # Twitter Clone with Graphql and React-Native
 
-### What is this ?
+### What is this?
 
 This is a simple Youtube tutorial where we go over some new tech. The end product is to build a Twitter kind of clone where we have real time updates.
 
 [End Product Intro Video](https://youtu.be/U9OfNJ9Ia70)
 
-### Prerequisite
+### Prerequisites
 
-- Installation of Mongodb, ReactNative and Nodejs
-- Understanding of Mongodb, Nodejs, ReactNative and a bit of Graphql
-- Know what is websocket
+- Installation of MongoDB, React Native and Nodejs
+- Understanding of MongoDB, Nodejs, React Native and a bit of GraphQL
+- Know what websocket are
 - Be patient with me ;)
 
 ## Part 1
@@ -20,13 +20,13 @@ This is a simple Youtube tutorial where we go over some new tech. The end produc
 - [The Setup](https://youtu.be/33qP1QMmjv8)
 - [Part 1](https://youtu.be/qLBwByURMf8)
 
-This part is mainly for the basic setup of the server. We go over the installation of express and the basic graphql setup. We also add Mongodb and we make mocks on it.
+This part is mainly for the basic setup of the server. We go over the installation of Express and the basic GraphQL setup. We also add MongoDB and we make mocks on it.
 
-1. Create a folder where we will put the server and mobile folder in
-2. Cd into the server folder and run the command `yarn init` + click enter on each question
+1. Create a folder to put the server and mobile folder in
+2. Cd into the server folder and run the command `yarn init` and click enter on each question
 3. Run `yarn add express cross-env body-parser`
 4. Create a folder called `src` and create a file inside called `index.js`
-5. Put the basic setup of express at the top of the file .
+5. Put the basic setup of express at the top of the file
 
 ```js
 import express from 'express';
@@ -50,13 +50,13 @@ app.listen(PORT, err => {
 
 `yarn add -D babel-cli babel-plugin-transform-object-rest-spread babel-preset-env`
 
-6. Go into your `package.json` and add this scripts file:
+6. Go into your `package.json` and add this script under the scripts:
 
 ```json
 "dev": "cross-env NODE_ENV=dev nodemon --exec babel-node src/index.js"
 ```
 
-7. Create a `.babelrc` with these settings : 
+7. Create a `.babelrc` with these settings: 
 
 ```
 {
@@ -83,7 +83,7 @@ app.listen(PORT, err => {
 
 Here I make use of `babel-preset-env`. This helps us to setup babel without pain.
 
-8. Now it is time to setup some graphql stuff. First create a folder called `graphql` inside `src`. After that create a `schema.js` file and put that in :
+8. Now it is time to set up some GraphQL stuff. First create a folder called `graphql` inside `src`. After that create a `schema.js` file and put the follow in it:
 
 ```js
 export default`
@@ -104,7 +104,7 @@ export default`
 
 Here we have a basic schema for the tweet. Also we have a query call `getTweets` you render a list of this tweet.
 
-9. Now time to write the resolver for this `getTweets`. Create a folder `resolvers` inside `src/graphql/`. After that, create a file called `tweet-resolver.js`. Inside this one put this:
+9. Now it's time to write the resolver for the `getTweets`. Create a folder `resolvers` inside `src/graphql/`. After that, create a file called `tweet-resolver.js`. Inside this one put this:
 
 ```js
 import Tweet from '../../models/Tweet';
@@ -126,7 +126,7 @@ export default {
 }
 ```
 
-But where did this `Tweet` models come from ? Yes, this is time to setup the db.
+But where did this `Tweet` models come from? Yes, this is time to setup the db.
 
 10. Create a `db.js` inside the `src/config/` folder. Put this lines in after running this command.
 
