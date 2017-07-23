@@ -56,7 +56,7 @@ app.listen(PORT, err => {
 "dev": "cross-env NODE_ENV=dev nodemon --exec babel-node src/index.js"
 ```
 
-7. Create a `.babelrc` with these settings: 
+7. Create a `.babelrc` with these settings:
 
 ```
 {
@@ -517,3 +517,267 @@ export default {
   }
 };
 ```
+
+---
+
+## Part 3 - Creation of the user with signup and login resolvers
+
+### Video
+
+[Link](https://youtu.be/3BeFarO6Wt8)
+
+In this part we go over the basic signup and login features for our app. We gonna start by creating the user schema for mongodb, after we gonna jump on the schema model inside grahpql. And finally we gonna work with the resolver and add action for crypt the user password.
+
+1. First we need to make the basic setup for the user schema for mongodb. Create a new file inside `src/models/` call `User.js`.
+
+```js
+import mongoose, { Schema } from 'mongoose';
+
+const UserSchema = new Schema({
+  username: {
+    type: String,
+    unique: true,
+  },
+  firstName: String,
+  lastName: String,
+  avatar: String,
+  password: String,
+  email: String,
+}, { timestamps: true });
+
+export default mongoose.model('User', UserSchema);
+```
+
+Here we just setup the basic field of what our user gonna need.
+
+2. Now time to create the user schema inside the defs of graphql.
+
+##### src/graphql/schema.js
+
+```js
+type User {
+  _id: ID!
+  username: String
+  email: String!
+  firstName: String
+  lastName: String
+  avatar: String
+  createdAt: Date!
+  updatedAt: Date!
+}
+```
+
+Ok what happen here ? Why do we don't have password ? We don't put the password for one unique and good reason. We don't want the client to have access to the password. In rest we need to manage a good way inside the models or maybe the controler for don't let a client access it. But in grahpql this is much more easy ;)
+
+3. Perfect time to work on the signup resolver. inside `src/graphql/resolvers/` create a file call `user-resolvers.js`
+
+```js
+import User from '../../models/User';
+
+export default {
+  signup: (_, { fullName, username, password, email, avatar }) => {
+    const [firstName, ...lastName] = fullName.split(' ');
+    return User.create({ firstName, lastName, username, password, email, avatar });
+  },
+}
+```
+
+??? What did I just did with the `fullName.split(' ')` what is this dark margic ;) "I'm just joking here ;)".
+
+Here as you can see first we make use of destructuring for get all the single value. I don't want to need to make use of args.email everywhere. After the thing is I want my client to have only one single input for get the fullName of the user. Less input and easier to work with. So the fullName came as a string with surely at least 2 words. the split method break the string inside an array when he see space. That's why the `(' ')`. After we say the first index = firstName and all the others equals the lastName. After we push it inside the new user creation.
+
+Now we need to add this inside the resolver index.
+
+##### src/graphql/resolvers/index.js
+
+```js
+import GraphQLDate from 'graphql-date';
+
+import TweetResolvers from './tweet-resolvers';
+import UserResolvers from './user-resolvers';
+
+export default {
+  Date: GraphQLDate,
+  Query: {
+    getTweet: TweetResolvers.getTweet,
+    getTweets: TweetResolvers.getTweets,
+  },
+  Mutation: {
+    createTweet: TweetResolvers.createTweet,
+    updateTweet: TweetResolvers.updateTweet,
+    deleteTweet: TweetResolvers.deleteTweet,
+    signup: UserResolvers.signup,
+  }
+};
+```
+
+And finally inside the schema graphql file
+
+##### src/graphql/schema.js
+
+```js
+signup(email: String!, fullName: String!, password: String!, avatar: String, username: String): User
+```
+
+For now we return the User type.
+
+Try it ;)
+
+![](https://image.ibb.co/cD3Ns5/Screen_Shot_2017_07_23_at_11_57_09_AM.png)
+
+4. We have a little problem at this point. If you check in your db using `Robo 3T` app or with the terminal you gonna see we save the password as a plain text string. This is REALLLLLLYYYYY bad. We need to crypt this thing and thank to the communities we have a simple packages who can make it for us easy.
+
+`yarn add bcrypt-nodejs`
+
+##### src/models/User.js
+
+```js
+import mongoose, { Schema } from 'mongoose';
+import { hashSync } from 'bcrypt-nodejs';
+
+const UserSchema = new Schema({
+  username: {
+    type: String,
+    unique: true,
+  },
+  firstName: String,
+  lastName: String,
+  avatar: String,
+  password: String,
+  email: String,
+}, { timestamps: true });
+
+UserSchema.pre('save', function(next) {
+  if (this.isModified('password')) {
+    this.password = this._hashPassword(this.password);
+    return next();
+  }
+  return next();
+});
+
+UserSchema.methods = {
+  _hashPassword(password) {
+    return hashSync(password);
+  },
+}
+
+export default mongoose.model('User', UserSchema);
+```
+
+Here we have import the function `hashSync` who hash the password for you. We make use of the pre hook method built in mongodb where before the user save we check first if he really modified the password. Because maybe we want to update the username of the user and we don't want to hash again the password for nothing. After we call a methods function call `_hashPassword()` who take the current password and return the hashing version. A methods is a function who can be use by the instance of the schema. Also `hashSync` is asyncronous.
+
+So now if you try again you should see a version hash of the password inside mongodb.
+
+![](https://image.ibb.co/gyb625/Screen_Shot_2017_07_23_at_12_05_40_PM.png)\
+
+5. Time to loged this user. First because the user schema file is open we can create a function who decrypt the password and make sure this is the equivalent of what the use sent.
+
+##### src/models/User.js
+
+```js
+import mongoose, { Schema } from 'mongoose';
+import { hashSync, compareSync } from 'bcrypt-nodejs';
+
+const UserSchema = new Schema({
+  username: {
+    type: String,
+    unique: true,
+  },
+  firstName: String,
+  lastName: String,
+  avatar: String,
+  password: String,
+  email: String,
+}, { timestamps: true });
+
+UserSchema.pre('save', function(next) {
+  if (this.isModified('password')) {
+    this.password = this._hashPassword(this.password);
+    return next();
+  }
+  return next();
+});
+
+UserSchema.methods = {
+  _hashPassword(password) {
+    return hashSync(password);
+  },
+  authenticateUser(password) {
+    return compareSync(password, this.password);
+  },
+};
+
+export default mongoose.model('User', UserSchema);
+```
+
+Here we add the `compareSync` import at the top. And finally we just create a methods on the user call `authenticateUser` who take the password coming from the client and return a boolean if the password match the one crypt.
+
+Time to jump on the resolver
+
+##### src/graphql/resolvers/user-resolvers.js
+
+```js
+import User from '../../models/User';
+
+export default {
+  signup: (_, { fullName, username, password, email, avatar }) => {
+    const [firstName, ...lastName] = fullName.split(' ');
+    return User.create({ firstName, lastName, username, password, email, avatar });
+  },
+  login: async (_, { email, password }) => {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      throw new Error('User not exist!');
+    }
+
+    if (!user.authenticateUser(password)) {
+      throw new Error('Password not match!');
+    }
+
+    return user;
+  }
+}
+```
+
+Here lot of code happening in the login but nothing crazy. First this gonna be an async function. After we destructuring the email and password field.
+
+First we find the user by his email. If no user came back we return an error about user not exist.
+
+After that mean a user exist we check if it match the password crypting version. If no we return an error about password don't match.
+
+Finally we return the user if all the guard case is good.
+
+##### src/graphql/resolvers/index.js
+
+```js
+Mutation: {
+  createTweet: TweetResolvers.createTweet,
+  updateTweet: TweetResolvers.updateTweet,
+  deleteTweet: TweetResolvers.deleteTweet,
+  signup: UserResolvers.signup,
+  login: UserResolvers.login
+}
+```
+
+Add the login inside the mutation.
+
+##### src/graphql/schema.js
+
+```js
+type Mutation {
+  createTweet(text: String!): Tweet
+  updateTweet(_id: ID!, text: String): Tweet
+  deleteTweet(_id: ID!): Status
+  signup(email: String!, fullName: String!, password: String!, avatar: String, username: String): User
+  login(email: String!, password: String!): User
+}
+```
+
+Add this in the schema grahpql. Here for now we return the user.
+
+Try it ;)
+
+![](https://image.ibb.co/dLpyFQ/Screen_Shot_2017_07_23_at_12_12_51_PM.png)
+
+---
