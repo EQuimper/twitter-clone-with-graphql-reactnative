@@ -1,5 +1,9 @@
 # Twitter Clone with Graphql and React-Native
 
+- [Part 1](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-1)
+- [Part 2](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-2)
+- [Part 3](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-3)
+
 ### What is this?
 
 This is a simple Youtube tutorial where we go over some new tech. The end product is to build a Twitter kind of clone where we have real time updates.
