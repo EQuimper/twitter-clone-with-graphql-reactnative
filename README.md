@@ -785,3 +785,475 @@ Try it ;)
 ![](https://image.ibb.co/dLpyFQ/Screen_Shot_2017_07_23_at_12_12_51_PM.png)
 
 ---
+
+## Part 4 - Authentication server side with JWT
+
+### Video
+
+[Link](https://youtu.be/2mXUcBHoJcA)
+
+In this part we go throught the user authentication server side. We gonna make use of JWT "json web token" [JWT Website](https://jwt.io) for being the strategy we use. Why ? Because that keep the server serverless, and this is really easy to implement in mobile app and also web app.
+
+First thing we gonna need a new package for the app.
+
+`yarn add jsonwebtoken`
+
+This is a library who gonna help you create a jwt and also verify this last one.
+
+1. We need to create a JWT_SECRET constants for the app. This way we make sure the JWT is provide by our server.
+
+##### src/config/constants.js
+
+```js
+export default {
+  PORT: process.env.PORT || 3000,
+  DB_URL: 'mongodb://localhost/tweet-development',
+  GRAPHQL_PATH: '/graphql',
+  JWT_SECRET: 'thisisasecret123'
+};
+```
+
+For now we put a really bad secret. We gonna change that on production.
+
+2. We gonna add a methods on the user for creating the jwt by taken his information.
+
+#####  src/models/User.js
+
+```js
+import mongoose, { Schema } from 'mongoose';
+import { hashSync, compareSync } from 'bcrypt-nodejs';
+import jwt from 'jsonwebtoken';
+
+import constants from '../config/constants';
+
+const UserSchema = new Schema({
+  username: {
+    type: String,
+    unique: true
+  },
+  firstName: String,
+  lastName: String,
+  avatar: String,
+  password: String,
+  email: String
+}, { timestamps: true });
+
+UserSchema.pre('save', function(next) {
+  if (this.isModified('password')) {
+    this.password = this._hashPassword(this.password);
+    return next();
+  }
+
+  return next();
+});
+
+UserSchema.methods = {
+  _hashPassword(password) {
+    return hashSync(password);
+  },
+  authenticateUser(password) {
+    return compareSync(password, this.password);
+  },
+  createToken() {
+    return jwt.sign(
+      {
+        _id: this._id,
+      },
+      constants.JWT_SECRET,
+    );
+  },
+}
+
+export default mongoose.model('User', UserSchema);
+```
+
+Here we add the method `createToken()` who finally return a JWT with the payload of the user id in. As you can see we need the secret for the creation.
+
+P.S we don't make it expires for this tutorial.
+
+3. Now we gonna create the services for authentication for the server. I like to keep this kind of strategies outside of my current code. So if I decide to change stuff I know where to go.
+
+##### src/services/auth.js
+
+```js
+import jwt from 'jsonwebtoken';
+
+import User from '../models/User';
+import constants from '../config/constants';
+
+export async function requireAuth(user) {
+  if (!user || !user._id) {
+    throw new Error('Unauthorized');
+  }
+
+  const me = await User.findById(user._id);
+
+  if (!me) {
+    throw new Error('Unauthorized');
+  }
+
+  return me;
+}
+
+export function decodeToken(token) {
+  const arr = token.split(' ');
+
+  if (arr[0] === 'Bearer') {
+    return jwt.verify(arr[1], constants.JWT_SECRET);
+  }
+
+  throw new Error('Token not valid!');
+}
+```
+
+Here I create a function call `requireAuth` who take a user object. This is coming from the client side inside the context "We gonna talk about this later".
+
+First I make sure we have user is not null and also _id prop too.
+
+After I search for the user with the user._id. Just again for security and maybe too if my user delete is account and try to do other stuff we make sure if the jwt pass the validation we can push out the user from our app.
+
+We return it for maybe take it inside resolver later.
+
+The second function is `decodeToken` who take a token string. First thing we split it because I want the jwt too look like `Bearer oiwgnwioeungowingonwogn`. But the `jwt.verify` only need the token himself.
+
+3. But now how can we access the user for make the requireAuth function work ?
+
+First we gonna refact the code.
+
+We gonna break up all the middlewares inside the same file and we gonna import it inside the index.js file
+
+##### src/config/middlewares.js
+
+```js
+import bodyParser from 'body-parser';
+import { graphiqlExpress, graphqlExpress } from 'apollo-server-express';
+import { makeExecutableSchema } from 'graphql-tools';
+
+import constants from './constants';
+import typeDefs from '../graphql/schema';
+import resolvers from '../graphql/resolvers';
+
+const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers,
+});
+
+export default app => {
+  app.use(bodyParser.json());
+  app.use(
+    '/graphiql',
+    graphiqlExpress({
+      endpointURL: constants.GRAPHQL_PATH,
+    }),
+  );
+  app.use(
+    constants.GRAPHQL_PATH,
+    graphqlExpress({
+      schema,
+      context: {
+        user: req.user,
+      },
+    }),
+  );
+};
+```
+
+##### src/index.js
+
+```js
+/* eslint-disable no-console */
+
+import express from 'express';
+import { createServer } from 'http';
+
+import './config/db';
+import constants from './config/constants';
+import middlewares from './config/middlewares';
+import mocks from './mocks';
+
+const app = express();
+
+middlewares(app);
+
+const graphQLServer = createServer(app);
+
+mocks().then(() => {
+  graphQLServer.listen(constants.PORT, err => {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log(`App listen to port: ${constants.PORT}`);
+    }
+  });
+});
+```
+
+Why do this ? Just for make my code cleaner ;)
+
+Now time to add a middleware inside express who gonna add the user inside the context. So this way we have access to it on every request.
+
+##### src/config/middlewares.js
+
+```js
+import bodyParser from 'body-parser';
+import { graphiqlExpress, graphqlExpress } from 'apollo-server-express';
+import { makeExecutableSchema } from 'graphql-tools';
+
+import constants from './constants';
+import typeDefs from '../graphql/schema';
+import resolvers from '../graphql/resolvers';
+import { decodeToken } from '../services/auth';
+
+const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers,
+});
+
+async function auth(req, res, next) {
+  try {
+    const token = req.headers.authorization;
+    if (token != null) {
+      const user = await decodeToken(token);
+      req.user = user; // eslint-disable-line
+    } else {
+      req.user = null; // eslint-disable-line
+    }
+    next();
+  } catch (error) {
+    throw error;
+  }
+}
+
+export default app => {
+  app.use(bodyParser.json());
+  app.use(auth);
+  app.use(
+    '/graphiql',
+    graphiqlExpress({
+      endpointURL: constants.GRAPHQL_PATH,
+    }),
+  );
+  app.use(
+    constants.GRAPHQL_PATH,
+    graphqlExpress(req => ({
+      schema,
+      context: {
+        user: req.user,
+      },
+    })),
+  );
+};
+```
+
+If you look at the function auth we make a middleware who check the headers authorization. If he find one he decode the token provide in it and if a user come from it he put it inside the req object.
+
+After inside the graphqlExpress middleware we add the req callback and we return the user inside the context.
+
+After we can change the resolvers for the tweet.
+
+##### src/graphql/resolvers/tweet-resolvers.js
+
+```js
+import Tweet from '../../models/Tweet';
+import { requireAuth } from '../../services/auth';
+
+export default {
+  getTweet: async (_, { _id }, { user }) => {
+    try {
+      await requireAuth(user);
+      return Tweet.findById(_id);
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  getTweets: async (_, args, { user }) => {
+    try {
+      await requireAuth(user);
+      return Tweet.find({}).sort({ createdAt: -1 });
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  createTweet: async (_, args, { user }) => {
+    try {
+      await requireAuth(user);
+      return Tweet.create(args);
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  updateTweet: async (_, { _id, ...rest }, { user }) => {
+    try {
+      await requireAuth(user);
+      return Tweet.findByIdAndUpdate(_id, rest, { new: true });
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  deleteTweet: async (_, { _id }) => {
+    try {
+      await Tweet.findByIdAndRemove(_id);
+      return {
+        message: 'Delete Success!',
+      };
+    } catch (error) {
+      throw error;
+    }
+  },
+};
+```
+
+Now we make sure all this function work only on when is auth. That gonna help you a lot for add the user id inside the Tweet in the next part too. As you can see I add also some trycatch for make sure if error we throw it.
+
+4. Now we can also add a resolver call me where we can receive the user object in the front end.
+
+##### src/graphql/resolvers/user-resolvers.js
+
+```js
+import User from '../../models/User';
+import { requireAuth } from '../../services/auth';
+
+export default {
+  signup: async (_, { fullName, ...rest }) => {
+    const [firstName, ...lastName] = fullName.split(' ');
+    try {
+      const user = await User.create({ firstName, lastName, ...rest });
+      return {
+        token: user.createToken(),
+      };
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  login: async (_, { email, password }) => {
+    try {
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        throw new Error('User not exist!');
+      }
+
+      if (!user.authenticateUser(password)) {
+        throw new Error('Password not match!');
+      }
+
+      return {
+        token: user.createToken(),
+      };
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  me: async (_, args, { user }) => {
+    try {
+      const me = await requireAuth(user);
+      return me;
+    } catch (error) {
+      throw error;
+    }
+  },
+};
+```
+
+We get the me object from the function `requireAuth` build earlier.
+
+Now the schema should look like this
+
+##### src/graphql/schema.js
+
+```js
+export default`
+  scalar Date
+
+  type Status {
+    message: String!
+  }
+
+  type Auth {
+    token: String
+  }
+
+  type User {
+    _id: ID!
+    username: String
+    email: String!
+    firstName: String
+    lastName: String
+    avatar: String
+    createdAt: Date!
+    updatedAt: Date!
+  }
+
+  type Me {
+    _id: ID!
+    username: String
+    email: String!
+    firstName: String
+    lastName: String
+    avatar: String
+    createdAt: Date!
+    updatedAt: Date!
+  }
+
+  type Tweet {
+    _id: ID!
+    text: String!
+    createdAt: Date!
+    updatedAt: Date!
+  }
+
+  type Query {
+    getTweet(_id: ID!): Tweet
+    getTweets: [Tweet]
+    me: User
+  }
+
+  type Mutation {
+    createTweet(text: String!): Tweet
+    updateTweet(_id: ID!, text: String): Tweet
+    deleteTweet(_id: ID!): Status
+    signup(email: String!, fullName: String!, password: String!, avatar: String, username: String): Auth
+    login(email: String!, password: String!): Auth
+  }
+
+  schema {
+    query: Query
+    mutation: Mutation
+  }
+`;
+```
+
+Now you see we return a auth type not anymore the user.
+
+Finally inside the index resolvers we do
+
+##### src/graphql/resolvers/index.js
+
+```js
+import GraphQLDate from 'graphql-date';
+
+import TweetResolvers from './tweet-resolvers';
+import UserResolvers from './user-resolvers';
+
+export default {
+  Date: GraphQLDate,
+  Query: {
+    getTweet: TweetResolvers.getTweet,
+    getTweets: TweetResolvers.getTweets,
+    me: UserResolvers.me
+  },
+  Mutation: {
+    createTweet: TweetResolvers.createTweet,
+    updateTweet: TweetResolvers.updateTweet,
+    deleteTweet: TweetResolvers.deleteTweet,
+    signup: UserResolvers.signup,
+    login: UserResolvers.login
+  }
+};
+```

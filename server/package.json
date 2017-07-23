@@ -17,6 +17,7 @@
     "graphql": "^0.10.5",
     "graphql-date": "^1.0.3",
     "graphql-tools": "^1.1.0",
+    "jsonwebtoken": "^7.4.1",
     "mongoose": "^4.11.3"
   },
   "devDependencies": {
