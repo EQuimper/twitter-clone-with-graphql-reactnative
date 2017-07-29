@@ -1258,3 +1258,189 @@ export default {
   }
 };
 ```
+
+---
+
+
+## Part 5 - Add tweet belongs to user
+
+### Video
+
+[Link](https://youtu.be/G2vt7BW4Sgw)
+
+In this part we go over the setup for adding a reference of the user inside the tweet schema. This way we can track who is the creator of this tweet and make sure he can be the only one to update this one or delete it.
+
+1. We need to change the setup of the tweet schema for mongodb.
+
+##### src/models/Tweet.js
+
+```js
+import mongoose, { Schema } from 'mongoose';
+
+const TweetSchema = new Schema({
+  text: {
+    type: String,
+    minlength: [5, 'Text need to be longer'],
+    maxlength: [144, 'Text too long'],
+  },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  favoriteCount: {
+    type: Number,
+    default: 0
+  }
+}, { timestamps: true });
+
+export default mongoose.model('Tweet', TweetSchema);
+```
+
+Here you see I add some database validation about the text. I add a minimun of 5 and a maximum of 144 characters. The thing in the bracket with the number are the error message show by the database.
+
+user here are reference of the User model we create earlier. We just need to save the id here.
+
+2. Add the user inside the create tweet resolvers.
+
+##### src/graphql/resolvers/tweet-resolvers.js
+
+```js
+createTweet: async (_, args, { user }) => {
+  try {
+    await requireAuth(user);
+    return Tweet.create({ ...args, user: user._id });
+  } catch (error) {
+    throw error;
+  }
+},
+```
+
+Here I spread my args to make sure we don't add an object in a object. This way each property get out of the last object and become a part of the new one. You can see too I add the `user._id` inside the user. This is how you add references to it. But this user came from the jwt so that's why he need to be authorized.
+
+3. We can do the same too with the update and delete so we can make sure the user who create it his the only who can update or delete it.
+
+##### src/graphql/resolvers/tweet-resolvers.js
+
+```js
+updateTweet: async (_, { _id, ...rest }, { user }) => {
+  try {
+    await requireAuth(user);
+    const tweet = await Tweet.findOne({ _id, user: user._id });
+
+    if (!tweet) {
+      throw new Error('Not found!');
+    }
+
+    Object.entries(rest).forEach(([key, value]) => {
+      tweet[key] = value;
+    });
+
+    return tweet.save();
+  } catch (error) {
+    throw error;
+  }
+},
+deleteTweet: async (_, { _id }, { user }) => {
+  try {
+    await requireAuth(user);
+    const tweet = await Tweet.findOne({ _id, user: user._id });
+
+    if (!tweet) {
+      throw new Error('Not found!');
+    }
+    await tweet.remove();
+    return {
+      message: 'Delete Success!'
+    }
+  } catch (error) {
+    throw error;
+  }
+}
+```
+
+For the update we get the tweet from the promise resolve. As you can see I make use of the `findOne` function who return only one document. I search a tweet who have the tweet id provide inside the args but also the user id provide from the jwt. If I have no tweet return that mean the tweet don't exist or the tweet exist but it's not belongs the user.
+
+After I loop over the rest object for update the tweet with the method `Object.entries` who give you access to the key and value. And finally we return the promise `tweet.save()`.
+
+For the delete almost the same process but we delete it and return a message.
+
+4. Now we can return an array of tweets belongs the user himself.
+
+##### src/graphql/resolvers/tweet-resolvers.js
+
+```js
+getUserTweets: async (_, args, { user }) => {
+  try {
+    await requireAuth(user);
+    return Tweet.find({ user: user._id }).sort({ createdAt: -1 })
+  } catch (error) {
+    throw error;
+  }
+},
+```
+
+This way we can as the mobile dev take it for show the user tweets in his profile.
+
+But don't forget the add this to the index resolver
+
+##### src/graphql/resolvers/index.js
+
+```js
+export default {
+  Date: GraphQLDate,
+  Tweet: {
+    user: ({ user }) => User.findById(user),
+  },
+  Query: {
+    getTweet: TweetResolvers.getTweet,
+    getTweets: TweetResolvers.getTweets,
+    getUserTweets: TweetResolvers.getUserTweets, // here
+    me: UserResolvers.me
+  },
+  Mutation: {
+    createTweet: TweetResolvers.createTweet,
+    updateTweet: TweetResolvers.updateTweet,
+    deleteTweet: TweetResolvers.deleteTweet,
+    signup: UserResolvers.signup,
+    login: UserResolvers.login
+  }
+};
+```
+
+5. Finally we can update the mocks for create the user + tweet with it.
+
+##### src/mocks/index.js
+
+```js
+import faker from 'faker';
+
+import Tweet from '../models/Tweet';
+import User from '../models/User';
+
+const TWEETS_TOTAL = 3;
+const USERS_TOTAL = 3;
+
+export default async () => {
+  try {
+    await Tweet.remove();
+    await User.remove();
+
+    await Array.from({ length: USERS_TOTAL }).forEach(async (_, i) => {
+      const user = await User.create({
+        username: faker.internet.userName(),
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
+        email: faker.internet.email(),
+        avatar: `https://randomuser.me/api/portraits/women/${i}.jpg`,
+        password: 'password123'
+      });
+
+      await Array.from({ length: TWEETS_TOTAL }).forEach(
+        async () => await Tweet.create({ text: faker.lorem.sentence(), user: user._id }),
+      );
+    });
+  } catch (error) {
+    throw error;
+  }
+};
+```
