@@ -5,6 +5,7 @@
 - [Part 3](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-3---creation-of-the-user-with-signup-and-login-resolvers)
 - [Part 4](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-4---authentication-server-side-with-jwt)
 - [Part 5](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-5---add-tweet-belongs-to-user)
+- [Part 6](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-6---setup-of-mobile-side)
 
 ### What is this?
 
