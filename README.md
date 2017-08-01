@@ -1445,3 +1445,11 @@ export default async () => {
   }
 };
 ```
+
+---
+
+## Part 6 - Setup of mobile side
+
+### Video
+
+[Link](https://youtu.be/c_8M5l4itrA)
