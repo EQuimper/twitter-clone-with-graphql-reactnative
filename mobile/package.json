@@ -1,0 +1,27 @@
+{
+  "name": "mobile",
+  "version": "0.0.0",
+  "description": "Hello Expo!",
+  "author": null,
+  "private": true,
+  "main": "node_modules/expo/AppEntry.js",
+  "dependencies": {
+    "apollo-client": "1.9.0-0",
+    "expo": "^19.0.0",
+    "react": "16.0.0-alpha.12",
+    "react-apollo": "^1.4.8",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-19.0.0.tar.gz",
+    "react-navigation": "^1.0.0-beta.11",
+    "react-redux": "^5.0.5",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "styled-components": "^2.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.3.0",
+    "eslint-config-equimper": "^2.2.1",
+    "eslint-config-prettier": "^2.3.0",
+    "prettier": "^1.5.3",
+    "redux-devtools-extension": "^2.13.2"
+  }
+}
