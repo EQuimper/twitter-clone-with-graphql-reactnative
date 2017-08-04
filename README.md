@@ -1454,3 +1454,11 @@ export default async () => {
 ### Video
 
 [Link](https://youtu.be/c_8M5l4itrA)
+
+---
+
+## Part 7 - Design of feed card
+
+### Video
+
+[Link](https://youtu.be/Lkn1FDbUU0U)

@@ -6,6 +6,7 @@
   "private": true,
   "main": "node_modules/expo/AppEntry.js",
   "dependencies": {
+    "@appandflow/touchable": "^1.1.1",
     "apollo-client": "1.9.0-0",
     "expo": "^19.0.0",
     "react": "16.0.0-alpha.12",
