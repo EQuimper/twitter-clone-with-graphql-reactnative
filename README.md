@@ -6,6 +6,7 @@
 - [Part 4](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-4---authentication-server-side-with-jwt)
 - [Part 5](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-5---add-tweet-belongs-to-user)
 - [Part 6](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-6---setup-of-mobile-side)
+- [Part 7](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-7---design-of-feed-card)
 
 ### What is this?
 
