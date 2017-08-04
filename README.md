@@ -1464,6 +1464,6 @@ export default async () => {
 
 [Link](https://youtu.be/Lkn1FDbUU0U)
 
-#### End Result
+#### End Result Of This Episode
 
 ![](https://image.ibb.co/nGHnpv/Screen_Shot_2017_08_03_at_8_31_10_PM.png)
