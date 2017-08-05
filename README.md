@@ -1467,7 +1467,7 @@ export default async () => {
 
 #### End Result Of This Episode
 
-<img src="https://preview.ibb.co/nGHnpv/Screen_Shot_2017_08_03_at_8_31_10_PM.png" alt="Screen Shot 2017 08 03 at 8 31 10 PM" border="0" />
+<img src="https://image.ibb.co/nGHnpv/Screen_Shot_2017_08_03_at_8_31_10_PM.png" height="75%" width="75%" border="0">
 
 ---
 
