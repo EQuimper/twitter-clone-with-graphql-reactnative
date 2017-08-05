@@ -7,6 +7,7 @@
 - [Part 5](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-5---add-tweet-belongs-to-user)
 - [Part 6](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-6---setup-of-mobile-side)
 - [Part 7](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-7---design-of-feed-card)
+- [Part 8](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative/tree/ep08#part-8---setup-the-navigations)
 
 ### What is this?
 
@@ -1466,7 +1467,7 @@ export default async () => {
 
 #### End Result Of This Episode
 
-![](https://image.ibb.co/nGHnpv/Screen_Shot_2017_08_03_at_8_31_10_PM.png=250x250)
+<img src="https://preview.ibb.co/nGHnpv/Screen_Shot_2017_08_03_at_8_31_10_PM.png" alt="Screen Shot 2017 08 03 at 8 31 10 PM" border="0" />
 
 ---
 
@@ -1476,4 +1477,6 @@ export default async () => {
 
 [Link](https://youtu.be/RrIPpWcuN5w)
 
-![](https://image.ibb.co/kEowHF/Screen_Shot_2017_08_05_at_10_57_43_AM.png=250x250)
+#### End Result Of This Episode
+
+<img src="https://preview.ibb.co/eKsdWa/Screen_Shot_2017_08_05_at_10_57_43_AM.png" alt="Screen_Shot_2017_08_05_at_10_57_43_AM" border="0">
