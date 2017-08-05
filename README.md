@@ -8,6 +8,7 @@
 - [Part 6](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-6---setup-of-mobile-side)
 - [Part 7](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-7---design-of-feed-card)
 - [Part 8](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative/tree/ep08#part-8---setup-the-navigations)
+- [Part 9](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-9---connect-the-mobile-app-with-the-server)
 
 ### What is this?
 
