@@ -1466,4 +1466,14 @@ export default async () => {
 
 #### End Result Of This Episode
 
-![](https://image.ibb.co/nGHnpv/Screen_Shot_2017_08_03_at_8_31_10_PM.png)
+![](https://image.ibb.co/nGHnpv/Screen_Shot_2017_08_03_at_8_31_10_PM.png=250x250)
+
+---
+
+## Part 8 - Setup the navigations
+
+### Video
+
+[Link](https://youtu.be/RrIPpWcuN5w)
+
+![](https://image.ibb.co/kEowHF/Screen_Shot_2017_08_05_at_10_57_43_AM.png=250x250)
