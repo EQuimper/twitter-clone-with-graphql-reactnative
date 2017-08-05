@@ -1480,3 +1480,11 @@ export default async () => {
 #### End Result Of This Episode
 
 <img src="https://preview.ibb.co/eKsdWa/Screen_Shot_2017_08_05_at_10_57_43_AM.png" alt="Screen_Shot_2017_08_05_at_10_57_43_AM" border="0">
+
+---
+
+## Part 9 - Connect the Mobile app with the Server
+
+### Video
+
+[Link](https://youtu.be/LVr3qaZGqUw)

@@ -5,9 +5,13 @@
   "author": null,
   "private": true,
   "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=19001'"
+  },
   "dependencies": {
     "@appandflow/touchable": "^1.1.1",
     "apollo-client": "1.9.0-0",
+    "date-fns": "^1.28.5",
     "expo": "^19.0.0",
     "react": "16.0.0-alpha.12",
     "react-apollo": "^1.4.8",
