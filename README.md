@@ -9,6 +9,7 @@
 - [Part 7](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-7---design-of-feed-card)
 - [Part 8](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative/tree/ep08#part-8---setup-the-navigations)
 - [Part 9](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-9---connect-the-mobile-app-with-the-server)
+- [Part 10](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-10---designing-the-signup-screen)
 
 ### What is this?
 
@@ -1497,3 +1498,8 @@ export default async () => {
 ### Video
 
 [Link](https://youtu.be/Zca5Kyi9cyc)
+
+#### End Result Of This Episode
+
+<img src="https://image.ibb.co/iX2rNF/Screen_Shot_2017_08_09_at_8_02_22_AM.png" alt="Screen_Shot_2017_08_05_at_10_57_43_AM" border="0">
+<img src="https://image.ibb.co/j27QhF/Screen_Shot_2017_08_09_at_8_02_25_AM.png" alt="Screen_Shot_2017_08_05_at_10_57_43_AM" border="0">
