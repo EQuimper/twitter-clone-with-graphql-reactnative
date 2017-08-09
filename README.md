@@ -1489,3 +1489,11 @@ export default async () => {
 ### Video
 
 [Link](https://youtu.be/LVr3qaZGqUw)
+
+---
+
+## Part 10 - Designing the Signup Screen
+
+### Video
+
+[Link](https://youtu.be/Zca5Kyi9cyc)
