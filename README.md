@@ -1503,3 +1503,9 @@ export default async () => {
 
 <img src="https://image.ibb.co/iX2rNF/Screen_Shot_2017_08_09_at_8_02_22_AM.png" alt="Screen_Shot_2017_08_05_at_10_57_43_AM" border="0">
 <img src="https://image.ibb.co/j27QhF/Screen_Shot_2017_08_09_at_8_02_25_AM.png" alt="Screen_Shot_2017_08_05_at_10_57_43_AM" border="0">
+
+## Part 11 - Authorization and Apollo Middleware
+
+### Video
+
+[Link](https://youtu.be/Ttvt3JhzGQ4)

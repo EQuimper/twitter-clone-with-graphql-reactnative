@@ -27,6 +27,7 @@
     "eslint-config-equimper": "^2.2.1",
     "eslint-config-prettier": "^2.3.0",
     "prettier": "^1.5.3",
-    "redux-devtools-extension": "^2.13.2"
+    "redux-devtools-extension": "^2.13.2",
+    "redux-logger": "^3.0.6"
   }
 }
