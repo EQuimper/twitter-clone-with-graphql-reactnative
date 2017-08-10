@@ -10,6 +10,7 @@
 - [Part 8](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative/tree/ep08#part-8---setup-the-navigations)
 - [Part 9](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-9---connect-the-mobile-app-with-the-server)
 - [Part 10](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-10---designing-the-signup-screen)
+- [Part 11](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-11---authorization-and-apollo-middleware)
 
 ### What is this?
 
