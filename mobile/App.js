@@ -3,6 +3,7 @@ import { AppLoading } from 'expo';
 import { UIManager, AsyncStorage } from 'react-native';
 import { ApolloProvider } from 'react-apollo';
 import { ThemeProvider } from 'styled-components';
+import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 
 import { store, client } from './src/store';
 import { colors } from './src/utils/constants';
@@ -17,7 +18,7 @@ if (UIManager.setLayoutAnimationEnabledExperimental) {
 export default class App extends React.Component {
   state = {
     appIsReady: false,
-  }
+  };
 
   componentWillMount() {
     this._checkIfToken();
@@ -34,17 +35,19 @@ export default class App extends React.Component {
     }
 
     this.setState({ appIsReady: true });
-  }
+  };
 
   render() {
     if (!this.state.appIsReady) {
-      return <AppLoading />
+      return <AppLoading />;
     }
     return (
       <ApolloProvider store={store} client={client}>
-        <ThemeProvider theme={colors}>
-          <AppNavigation />
-        </ThemeProvider>
+        <ActionSheetProvider>
+          <ThemeProvider theme={colors}>
+            <AppNavigation />
+          </ThemeProvider>
+        </ActionSheetProvider>
       </ApolloProvider>
     );
   }
