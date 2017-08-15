@@ -12,6 +12,7 @@
 - [Part 10](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-10---designing-the-signup-screen)
 - [Part 11](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-11---authorization-and-apollo-middleware)
 - [Part 12](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-12---me-query-with-header-avatar-and-logout)
+- [Part 13](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-13---designing-the-newtweetscreen)
 
 ### What is this?
 
