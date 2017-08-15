@@ -1519,4 +1519,17 @@ export default async () => {
 ## Part 12 - Me Query with Header avatar and logout
 
 ### Video
+
 [Link](https://youtu.be/DDeNQ55mWTQ)
+
+---
+
+## Part 13 - Designing the NewTweetScreen
+
+### Video
+
+[Link](https://youtu.be/0u_HUWkEIII)
+
+<img src="https://image.ibb.co/jrQBcF/Screen_Shot_2017_08_15_at_8_43_24_AM.png" alt="Screen_Shot_2017_08_05_at_10_57_43_AM" border="0">
+
+<img src="https://image.ibb.co/dLYKWa/Screen_Shot_2017_08_15_at_8_43_29_AM.png" alt="Screen_Shot_2017_08_05_at_10_57_43_AM" border="0">
