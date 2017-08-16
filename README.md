@@ -1534,3 +1534,11 @@ export default async () => {
 <img src="https://image.ibb.co/jrQBcF/Screen_Shot_2017_08_15_at_8_43_24_AM.png" alt="Screen_Shot_2017_08_05_at_10_57_43_AM" border="0">
 
 <img src="https://image.ibb.co/dLYKWa/Screen_Shot_2017_08_15_at_8_43_29_AM.png" alt="Screen_Shot_2017_08_05_at_10_57_43_AM" border="0">
+
+---
+
+## Part 14 - CreateTweet mutation add to the NewScreenTweet + Optimistic-ui
+
+### Video
+
+[Link](https://youtu.be/sDCfEh6XIU0)
