@@ -1543,3 +1543,9 @@ export default async () => {
 ### Video
 
 [Link](https://youtu.be/sDCfEh6XIU0)
+
+## Part 15 - Subscriptions for real time data -> TweetCreation
+
+### Video
+
+[Link](https://youtu.be/V472NiWt2Jg)
