@@ -1550,3 +1550,19 @@ export default async () => {
 ### Video
 
 [Link](https://youtu.be/V472NiWt2Jg)
+
+---
+
+## Part 16-Prelude - Talk about the Favorite Tweet features
+
+### Video
+
+[Link](https://youtu.be/h6m1gs9OjB4)
+
+---
+
+## Part 16 - Code the favorite tweet features server side
+
+### Video
+
+[Link](https://youtu.be/n8VNuRvMYv4)
