@@ -19,6 +19,7 @@ export default {
     createTweet: TweetResolvers.createTweet,
     updateTweet: TweetResolvers.updateTweet,
     deleteTweet: TweetResolvers.deleteTweet,
+    favoriteTweet: TweetResolvers.favoriteTweet,
     signup: UserResolvers.signup,
     login: UserResolvers.login
   },

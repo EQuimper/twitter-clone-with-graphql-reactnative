@@ -1,4 +1,5 @@
 import Tweet from '../../models/Tweet';
+import FavoriteTweet from '../../models/FavoriteTweet';
 import { requireAuth } from '../../services/auth';
 import { pubsub } from '../../config/pubsub';
 
@@ -71,6 +72,16 @@ export default {
       return {
         message: 'Delete Success!'
       }
+    } catch (error) {
+      throw error;
+    }
+  },
+  favoriteTweet: async (_, { _id }, { user }) => {
+    try {
+      await requireAuth(user);
+      const favorites = await FavoriteTweet.findOne({ userId: user._id });
+
+      return favorites.userFavoritedTweet(_id);
     } catch (error) {
       throw error;
     }
