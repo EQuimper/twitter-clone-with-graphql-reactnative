@@ -15,6 +15,8 @@
 - [Part 13](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-13---designing-the-newtweetscreen)
 - [Part 14](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-14---createtweet-mutation-add-to-the-newscreentweet--optimistic-ui)
 - [Part 15](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-15---subscriptions-for-real-time-data---tweetcreation)
+- [Part 16-Prelude](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-16-prelude---talk-about-the-favorite-tweet-features)
+- [Part 16](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-16---code-the-favorite-tweet-features-server-side)
 
 ### What is this?
 
