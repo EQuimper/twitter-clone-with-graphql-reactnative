@@ -1577,3 +1577,11 @@ export default async () => {
 ### Video
 
 [Link](https://youtu.be/8zNfgm_vp3A)
+
+---
+
+## Part 18 - Adding ui change for the favorite tweet
+
+### Video
+
+[Link](https://youtu.be/iAxeLDaU-ms)
