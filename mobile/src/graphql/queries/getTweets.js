@@ -6,6 +6,7 @@ export default gql`
       text
       _id
       createdAt
+      isFavorited
       favoriteCount
       user {
         username
