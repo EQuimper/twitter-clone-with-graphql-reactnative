@@ -1568,3 +1568,11 @@ export default async () => {
 ### Video
 
 [Link](https://youtu.be/n8VNuRvMYv4)
+
+---
+
+## Part 17 - Favorite tweet mutation mobile side
+
+### Video
+
+[Link](https://youtu.be/8zNfgm_vp3A)
