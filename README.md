@@ -1586,3 +1586,11 @@ export default async () => {
 ### Video
 
 [Link](https://youtu.be/iAxeLDaU-ms)
+
+---
+
+## Part 19 - Subscription for the favorite tweet
+
+### Video
+
+[Link](https://youtu.be/2zHBhSp8V3c)

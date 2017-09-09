@@ -24,6 +24,7 @@ export default {
     login: UserResolvers.login
   },
   Subscription: {
-    tweetAdded: TweetResolvers.tweetAdded
+    tweetAdded: TweetResolvers.tweetAdded,
+    tweetFavorited: TweetResolvers.tweetFavorited
   }
 };
