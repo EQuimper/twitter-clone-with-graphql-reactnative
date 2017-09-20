@@ -20,6 +20,7 @@
 - [Part 17](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-17---favorite-tweet-mutation-mobile-side)
 - [Part 18](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-18---adding-ui-change-for-the-favorite-tweet)
 - [Part 19](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-19---subscription-for-the-favorite-tweet)
+- [Part 20](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-20---placeholder-for-loading-card)
 
 ### What is this?
 
