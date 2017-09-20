@@ -1595,3 +1595,11 @@ export default async () => {
 ### Video
 
 [Link](https://youtu.be/2zHBhSp8V3c)
+
+---
+
+## Part 20 - Placeholder for loading card
+
+### Video
+
+[Link](https://youtu.be/vvMnG8SZfaU)

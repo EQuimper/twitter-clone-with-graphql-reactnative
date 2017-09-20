@@ -21,6 +21,7 @@
     "react-redux": "^5.0.5",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
+    "rn-placeholder": "^1.0.1",
     "styled-components": "^2.1.1",
     "subscriptions-transport-ws": "^0.8.2"
   },
