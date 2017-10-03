@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components/native';
 import { graphql, compose, withApollo } from 'react-apollo';
-import { ActivityIndicator, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 import { connect } from 'react-redux';
 
 import FeedCard from '../components/FeedCard/FeedCard';

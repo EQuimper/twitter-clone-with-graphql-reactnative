@@ -85,6 +85,7 @@ class NewTweetScreen extends Component {
           favoriteCount: 0,
           _id: Math.round(Math.random() * -1000000),
           createdAt: new Date(),
+          isFavorited: false,
           user: {
             __typename: 'User',
             username: user.username,
