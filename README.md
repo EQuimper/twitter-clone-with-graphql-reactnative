@@ -21,6 +21,8 @@
 - [Part 18](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-18---adding-ui-change-for-the-favorite-tweet)
 - [Part 19](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-19---subscription-for-the-favorite-tweet)
 - [Part 20](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-20---placeholder-for-loading-card)
+- [Part 21](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-21---design-of-profile-page)
+- [Part 22](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-22---using-fragments)
 
 ### What is this?
 
