@@ -1,18 +1,18 @@
 import { gql } from 'react-apollo';
 
 export default gql`
-  subscription {
-    tweetAdded {
-      text
+  {
+    getUserTweets {
       _id
+      text
       createdAt
-      isFavorited
       favoriteCount
+      isFavorited
       user {
-        username
-        avatar
         firstName
         lastName
+        avatar
+        username
       }
     }
   }
