@@ -1,19 +1,12 @@
 import { gql } from 'react-apollo';
 
+import FeedCard from '../../components/FeedCard/FeedCard';
+
 export default gql`
   subscription {
     tweetAdded {
-      text
-      _id
-      createdAt
-      isFavorited
-      favoriteCount
-      user {
-        username
-        avatar
-        firstName
-        lastName
-      }
+      ...FeedCard
     }
   }
+  ${FeedCard.fragments.tweet}
 `;

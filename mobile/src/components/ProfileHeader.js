@@ -1,8 +1,9 @@
-
 import React from 'react';
 import styled from 'styled-components/native';
 
-const HeaderContainer = styled.View`
+const AVATAR_SIZE = 60;
+
+const Root = styled.View`
   height: 140;
   alignSelf: stretch;
   paddingTop: 50;
@@ -19,26 +20,28 @@ const Heading = styled.View`
 `;
 
 const Avatar = styled.Image`
-  height: 60;
-  width: 60;
-  borderRadius: 30;
+  height: ${AVATAR_SIZE};
+  width: ${AVATAR_SIZE};
+  borderRadius: ${AVATAR_SIZE / 2};
+  backgroundColor: yellow;
 `;
 
 const UsernameContainer = styled.View`
   flex: 1;
   paddingLeft: 10;
+  alignSelf: stretch;
 `;
 
-const Fullname = styled.Text`
+const FullName = styled.Text`
   color: ${props => props.theme.SECONDARY};
   fontWeight: bold;
   fontSize: 18;
 `;
 
-const Username = styled.Text`
+const UserName = styled.Text`
   color: ${props => props.theme.SECONDARY};
-  opacity: 0.8;
   fontSize: 15;
+  opacity: 0.8;
 `;
 
 const MetaContainer = styled.View`
@@ -58,22 +61,20 @@ const MetaText = styled.Text`
   fontWeight: 600;
 `;
 
-const MetaTextNumber = styled.Text`
-  color: ${props => props.theme.PRIMARY};
-`;
+const MetaTextNumber = styled.Text`color: ${props => props.theme.PRIMARY};`;
 
-export default function ProfileHeader({ avatar, firstName, lastName, username }) {
+export default function ProfileHeader({ firstName, lastName, avatar, username}) {
   return (
-    <HeaderContainer>
+    <Root>
       <Heading>
         <Avatar source={{ uri: avatar }} />
         <UsernameContainer>
-          <Fullname>
+          <FullName>
             {firstName} {lastName}
-          </Fullname>
-          <Username>
+          </FullName>
+          <UserName>
             @{username}
-          </Username>
+          </UserName>
         </UsernameContainer>
       </Heading>
       <MetaContainer>
@@ -88,6 +89,6 @@ export default function ProfileHeader({ avatar, firstName, lastName, username })
           </MetaText>
         </MetaBox>
       </MetaContainer>
-    </HeaderContainer>
+    </Root>
   );
 }
