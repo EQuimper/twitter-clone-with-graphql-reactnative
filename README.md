@@ -1604,3 +1604,19 @@ export default async () => {
 ### Video
 
 [Link](https://youtu.be/vvMnG8SZfaU)
+
+---
+
+## Part 21 - Design of Profile page
+
+### Video
+
+[Link](https://youtu.be/B2b4LS4WBtQ)
+
+---
+
+## Part 22 - Using fragments
+
+### Video
+
+[Link](https://youtu.be/3xt9Rm31Prc)
