@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { FlatList } from 'react-native';
 import styled from 'styled-components/native';
-import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
+import { graphql, compose } from 'react-apollo';
+import { FlatList } from 'react-native';
 
 import ProfileHeader from '../components/ProfileHeader';
 import FeedCard from '../components/FeedCard/FeedCard';
@@ -14,38 +14,39 @@ const Root = styled.View`
   backgroundColor: #f1f6fa;
 `;
 
-const T = styled.Text``;
+const T = styled.Text``
 
 class ProfileScreen extends Component {
-  state = {};
+  state = {  }
 
-  _renderItem = ({ item }) => <FeedCard {...item} key={item._id} />;
+  _renderItem = ({ item }) => <FeedCard {...item} />;
 
-  _renderPlaceholder = ({ item }) =>
+  _renderPlaceholder = () => (
     <FeedCard
       placeholder
-      key={item}
-      isLoaded={this.props.getUserTweetsQuery.loading}
-    />;
+      isLoaded={this.props.data.loading}
+    />
+  )
 
   render() {
-    const { getUserTweetsQuery, info } = this.props;
+    const { info, data } = this.props;
+
     return (
       <Root>
         <ProfileHeader {...info} />
-        {getUserTweetsQuery.loading ? (
+        {data.loading ? (
           <FlatList
-            contentContainerStyle={{ alignSelf: 'stretch' }}
             data={[1, 2, 3]}
             renderItem={this._renderPlaceholder}
             keyExtractor={item => item}
+            contentContainerStyle={{ alignSelf: 'stretch' }}
           />
         ) : (
           <FlatList
-            contentContainerStyle={{ alignSelf: 'stretch' }}
-            data={getUserTweetsQuery.getUserTweets}
+            data={data.getUserTweets}
             renderItem={this._renderItem}
             keyExtractor={item => item._id}
+            contentContainerStyle={{ alignSelf: 'stretch' }}
           />
         )}
       </Root>
@@ -54,6 +55,6 @@ class ProfileScreen extends Component {
 }
 
 export default compose(
-  graphql(GET_USER_TWEETS_QUERY, { name: 'getUserTweetsQuery' }),
-  connect(state => ({ info: state.user.info }))
-)(ProfileScreen);
+  graphql(GET_USER_TWEETS_QUERY),
+  connect(state => ({ info: state.user.info }),
+))(ProfileScreen);

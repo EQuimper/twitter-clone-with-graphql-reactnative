@@ -1,19 +1,12 @@
 import { gql } from 'react-apollo';
 
+import FeedCard from '../../components/FeedCard/FeedCard';
+
 export default gql`
   {
     getUserTweets {
-      _id
-      text
-      createdAt
-      favoriteCount
-      isFavorited
-      user {
-        firstName
-        lastName
-        avatar
-        username
-      }
+      ...FeedCard
     }
   }
+  ${FeedCard.fragments.tweet}
 `;
