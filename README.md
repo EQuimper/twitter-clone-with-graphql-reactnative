@@ -23,6 +23,7 @@
 - [Part 20](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-20---placeholder-for-loading-card)
 - [Part 21](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-21---design-of-profile-page)
 - [Part 22](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-22---using-fragments)
+- [Part 23](https://github.com/EQuimper/twitter-clone-with-graphql-reactnative#part-23---creation-of-the-following-schema)
 
 ### What is this?
 
