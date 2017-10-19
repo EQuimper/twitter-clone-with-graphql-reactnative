@@ -1622,3 +1622,11 @@ export default async () => {
 ### Video
 
 [Link](https://youtu.be/3xt9Rm31Prc)
+
+---
+
+## Part 23 - Creation of the following schema
+
+### Video
+
+[Link](https://youtu.be/Ldo0SsairC4)
